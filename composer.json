@@ -1,0 +1,20 @@
+{
+  "name": "iit/yii2-advanced-asset-manager",
+  "description": "yii2 advanced assetManager",
+  "type": "yii2-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "ilovintit",
+      "email": "ilovintit@gmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "iit\\": ""
+    }
+  }
+}
