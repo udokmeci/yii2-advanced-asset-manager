@@ -11,7 +11,7 @@
   ],
   "require": {
     "yiisoft/yii2": "*",
-    "qiniu/php-sdk": "*",
+    "qiniu/php-sdk": "*"
   },
   "autoload": {
     "psr-4": {
