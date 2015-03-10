@@ -1,7 +1,7 @@
 {
   "name": "iit/yii2-advanced-asset-manager",
   "description": "yii2 advanced assetManager",
-  "type": "yii2-extension",
+  "type": "library",
   "license": "MIT",
   "authors": [
     {
@@ -17,5 +17,8 @@
     "psr-4": {
       "iit\\": ""
     }
+  },
+  "branch-alias": {
+	"dev-master": "0.0.x-dev"
   }
-}
+
