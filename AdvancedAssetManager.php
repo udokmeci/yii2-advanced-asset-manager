@@ -4,17 +4,23 @@ namespace iit;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\FileHelper;
+use Qiniu\Storage\UploadManager;
+use Qiniu\Auth;
 
 class AssetManager extends \yii\web\AssetManager
 {
     public $syncRemote = false;
     public $enableCache = false;
+    public $accessKey;
+    public $secretKey;
+    public $bucket;
+    public $domain;
 
     private $_published = [];
 
     public function publish($path, $options = [])
     {
-        if ($this->remoteAsset) {
+        if ($this->syncRemote) {
             $path = Yii::getAlias($path);
 
             if (isset($this->_published[$path])) {
