@@ -11,7 +11,7 @@
   ],
   "require": {
     "yiisoft/yii2": "*",
-    "qiniu/php-sdk": "dev-master"
+    "iit/yii2-flysystem": "dev-master"
   },
   "autoload": {
     "psr-4": {
