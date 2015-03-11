@@ -2,12 +2,13 @@
 namespace iit;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
 use yii\helpers\FileHelper;
 use Qiniu\Storage\UploadManager;
 use Qiniu\Auth;
 
-class AssetManager extends \yii\web\AssetManager
+class AdvancedAssetManager extends \yii\web\AssetManager
 {
     public $syncRemote = false;
     public $enableCache = false;
@@ -17,6 +18,19 @@ class AssetManager extends \yii\web\AssetManager
     public $domain;
 
     private $_published = [];
+    private $_auth;
+
+    public function init()
+    {
+        parent::init();
+        if ($this->syncRemote) {
+            if ($this->accessKey && $this->secretKey && $this->bucket) {
+                $this->_auth = new Auth($this->accessKey, $this->secretKey);
+            } else {
+                throw new InvalidConfigException('Please Input accessKey and secretKey and bucket');
+            }
+        }
+    }
 
     public function publish($path, $options = [])
     {
@@ -49,9 +63,8 @@ class AssetManager extends \yii\web\AssetManager
         if ($this->enableCache && ($cache = Yii::$app->cache->get($dir)) != null && $cache['time'] == $time) {
             return [$cache['src'], $cache['url']];
         }
-        $auth = new Auth($this->accessKey, $this->secretKey);
         $upload = new UploadManager();
-        $token = $auth->uploadToken($this->bucket);
+        $token = $this->_auth->uploadToken($this->bucket);
         list($ret, $err) = $upload->putFile($token, $dir . '/' . $fileName, $src);
         if ($err == null) {
             $url = $this->domain . '/' . $dir . '/' . $fileName;
@@ -71,9 +84,8 @@ class AssetManager extends \yii\web\AssetManager
                 return [$cache['src'], $cache['url']];
             }
         }
-        $auth = new Auth($this->accessKey, $this->secretKey);
         $upload = new UploadManager();
-        $token = $auth->uploadToken($this->bucket);
+        $token = $this->_auth->uploadToken($this->bucket);
         $err = null;
         foreach (FileHelper::findFiles($src) as $file) {
             $remoteFile = (str_replace($src, '', $file));
