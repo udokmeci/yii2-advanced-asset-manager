@@ -11,15 +11,12 @@
   ],
   "require": {
     "yiisoft/yii2": "*",
-    "qiniu/php-sdk": "dev-master"
+    "qiniu/php-sdk": "@dev"
   },
   "autoload": {
     "psr-4": {
       "iit\\": ""
     }
-  },
-  "branch-alias": {
-	"dev-master": "0.0.x-dev"
   }
 }
 
